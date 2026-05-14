@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>给最好的朋友</title>
+    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 20px;
+            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+            background: #fdf6f0;
+            color: #333;
+            line-height: 2;
+        }
+        h1 { text-align: center; color: #c0392b; font-size: 28px; margin-bottom: 20px; }
+        .message-box {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        img { width: 100%; border-radius: 10px; margin: 15px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
+        video { width: 100%; border-radius: 10px; margin: 15px 0; }
+        .date { color: #999; font-size: 14px; margin-top: 20px; }
+
+        .board-section { margin-top: 40px; border-top: 2px solid #e0d5cc; padding-top: 30px; }
+        .board-section h2 { text-align: center; color: #8b5e3c; margin-bottom: 20px; }
+
+        .comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+        .comment-form input, .comment-form textarea {
+            padding: 12px; border: 1px solid #ddd; border-radius: 8px;
+            font-size: 14px; font-family: inherit; resize: vertical;
+        }
+        .comment-form textarea { min-height: 80px; }
+        .comment-form button {
+            padding: 12px 24px; background: #c0392b; color: #fff;
+            border: none; border-radius: 8px; cursor: pointer; font-size: 15px; align-self: flex-end;
+        }
+
+        .comment-item {
+            background: #fff; padding: 15px; border-radius: 10px;
+            margin-bottom: 15px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+        }
+        .comment-item .author { font-weight: bold; color: #8b5e3c; margin-bottom: 5px; }
+        .comment-item .time { font-size: 12px; color: #999; margin-left: 10px; }
+        .comment-item .content { color: #555; line-height: 1.6; word-break: break-word; }
+        .comment-item .actions { margin-top: 8px; font-size: 13px; }
+        .comment-item .actions a { color: #c0392b; cursor: pointer; margin-right: 12px; text-decoration: none; }
+
+        .editing-textarea {
+            width: 100%; min-height: 60px; padding: 10px; border: 1px solid #ddd;
+            border-radius: 6px; font-family: inherit; font-size: 14px; margin: 8px 0; resize: vertical;
+        }
+        .save-edit-btn, .cancel-edit-btn {
+            padding: 6px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; margin-right: 8px;
+        }
+        .save-edit-btn { background: #27ae60; color: #fff; }
+        .cancel-edit-btn { background: #ccc; color: #333; }
+    </style>
+</head>
+<body>
+
+    <h1>🌍 无论多远，友谊不变</h1>
+
+    <div class="message-box">
+        <p>嘿！听说你要去英国了。</p>
+        <p>这个网站是专门为你建的，我会在这里更新照片和想对你说的话。不管你在地球哪一边，打开这个网址就能看到。</p>
+        <p>一路顺风，常联系！</p>
+    </div>
+
+    <p class="date">📷 2024年 我们的合照</p>
+    <img src="photo1.jpg" alt="合照1">
+    <p>这张还记得在哪拍的吗？</p>
+
+    <p class="date">📷 更多回忆</p>
+    <img src="photo2.jpg" alt="合照2">
+    <p>那天真的超开心</p>
+
+    <div class="board-section">
+        <h2>📝 留言板</h2>
+
+        <div class="comment-form">
+            <input type="text" id="authorInput" placeholder="你的名字" maxlength="20" />
+            <textarea id="contentInput" placeholder="说点什么吧..." maxlength="500"></textarea>
+            <button onclick="postComment()">💬 留言</button>
+        </div>
+
+        <div id="commentList">加载中...</div>
+    </div>
+
+    <script>
+        const APP_ID = 'zaxzlp';
+        const APP_KEY = '2006110';
+
+        AV.init({ appId: APP_ID, appKey: APP_KEY });
+        const commentListEl = document.getElementById('commentList');
+
+        async function loadComments() {
+            const query = new AV.Query('Message');
+            query.descending('createdAt');
+            try {
+                const results = await query.find();
+                if (results.length === 0) {
+                    commentListEl.innerHTML = '<p style="text-align:center;color:#999;">还没有留言，来说一句吧 💬</p>';
+                    return;
+                }
+                let html = '';
+                results.forEach(msg => {
+                    const author = msg.get('author') || '匿名';
+                    const content = msg.get('content') || '';
+                    const time = msg.createdAt.toLocaleString('zh-CN');
+                    html += `
+                        <div class="comment-item">
+                            <div class="author">${escapeHtml(author)}<span class="time">${time}</span></div>
+                            <div class="content" id="content-${msg.id}">${escapeHtml(content)}</div>
+                            <div class="actions">
+                                <a onclick="startEdit('${msg.id}')">✏️ 编辑</a>
+                                <a onclick="deleteComment('${msg.id}')">🗑️ 删除</a>
+                            </div>
+                        </div>`;
+                });
+                commentListEl.innerHTML = html;
+            } catch (err) {
+                commentListEl.innerHTML = '<p style="color:red;">加载失败</p>';
+            }
+        }
+
+        async function postComment() {
+            const author = document.getElementById('authorInput').value.trim() || '匿名';
+            const content = document.getElementById('contentInput').value.trim();
+            if (!content) { alert('请输入留言内容'); return; }
+            const Message = AV.Object.extend('Message');
+            const msg = new Message();
+            msg.set('author', author);
+            msg.set('content', content);
+            await msg.save();
+            document.getElementById('authorInput').value = '';
+            document.getElementById('contentInput').value = '';
+            loadComments();
+        }
+
+        function startEdit(objectId) {
+            const el = document.getElementById('content-' + objectId);
+            const text = el.innerText;
+            el.innerHTML = `<textarea class="editing-textarea" id="edit-${objectId}">${escapeHtml(text)}</textarea>
+                <button class="save-edit-btn" onclick="saveEdit('${objectId}')">保存</button>
+                <button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
+        }
+
+        async function saveEdit(objectId) {
+            const newContent = document.getElementById('edit-' + objectId).value.trim();
+            if (!newContent) { alert('内容不能为空'); return; }
+            const query = new AV.Query('Message');
+            const msg = await query.get(objectId);
+            msg.set('content', newContent);
+            await msg.save();
+            loadComments();
+        }
+
+        async function deleteComment(objectId) {
+            if (!confirm('确定删除这条留言吗？')) return;
+            const query = new AV.Query('Message');
+            const msg = await query.get(objectId);
+            await msg.destroy();
+            loadComments();
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.innerText = str;
+            return div.innerHTML;
+        }
+
+        loadComments();
+    </script>
+</body>
+</html>
