@@ -1,0 +1,43 @@
+// api/kv.js
+const { kv } = require('@vercel/kv');
+
+export default async function handler(req, res) {
+    if (req.method === 'GET') {
+        try {
+            const raw = await kv.get('messages');
+            const messages = raw ? JSON.parse(raw) : [];
+            res.status(200).json({ messages });
+        } catch (error) {
+            res.status(500).json({ error: '读取失败' });
+        }
+    } else if (req.method === 'POST') {
+        const { action, author, content, id } = req.body;
+        try {
+            const raw = await kv.get('messages');
+            const messages = raw ? JSON.parse(raw) : [];
+
+            if (action === 'add') {
+                const newMsg = {
+                    id: Date.now().toString(),
+                    author,
+                    content,
+                    time: new Date().toISOString()
+                };
+                messages.push(newMsg);
+            } else if (action === 'delete') {
+                const index = messages.findIndex(m => m.id === id);
+                if (index !== -1) messages.splice(index, 1);
+            } else if (action === 'edit') {
+                const msg = messages.find(m => m.id === id);
+                if (msg) msg.content = content;
+            }
+
+            await kv.set('messages', JSON.stringify(messages));
+            res.status(200).json({ success: true });
+        } catch (error) {
+            res.status(500).json({ error: '操作失败' });
+        }
+    } else {
+        res.status(405).json({ error: 'Method Not Allowed' });
+    }
+}

@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>给最好的朋友</title>
-    <script src="//cdn.jsdelivr.net/npm/leancloud-storage@4.15.2/dist/av-min.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -94,26 +93,25 @@
     </div>
 
     <script>
-        const APP_ID = 'zaxzlp';
-        const APP_KEY = '2006110';
-
-        AV.init({ appId: APP_ID, appKey: APP_KEY });
+        const KV_API = '/api/kv';
         const commentListEl = document.getElementById('commentList');
 
         async function loadComments() {
-            const query = new AV.Query('Message');
-            query.descending('createdAt');
             try {
-                const results = await query.find();
-                if (results.length === 0) {
+                const res = await fetch(KV_API + '?action=list');
+                const data = await res.json();
+                const messages = data.messages || [];
+
+                if (messages.length === 0) {
                     commentListEl.innerHTML = '<p style="text-align:center;color:#999;">还没有留言，来说一句吧 💬</p>';
                     return;
                 }
+
                 let html = '';
-                results.forEach(msg => {
-                    const author = msg.get('author') || '匿名';
-                    const content = msg.get('content') || '';
-                    const time = msg.createdAt.toLocaleString('zh-CN');
+                messages.reverse().forEach(msg => {
+                    const author = msg.author || '匿名';
+                    const content = msg.content || '';
+                    const time = new Date(msg.time).toLocaleString('zh-CN');
                     html += `
                         <div class="comment-item">
                             <div class="author">${escapeHtml(author)}<span class="time">${time}</span></div>
@@ -126,7 +124,8 @@
                 });
                 commentListEl.innerHTML = html;
             } catch (err) {
-                commentListEl.innerHTML = '<p style="color:red;">加载失败</p>';
+                commentListEl.innerHTML = '<p style="color:red;">加载留言失败</p>';
+                console.error(err);
             }
         }
 
@@ -134,40 +133,59 @@
             const author = document.getElementById('authorInput').value.trim() || '匿名';
             const content = document.getElementById('contentInput').value.trim();
             if (!content) { alert('请输入留言内容'); return; }
-            const Message = AV.Object.extend('Message');
-            const msg = new Message();
-            msg.set('author', author);
-            msg.set('content', content);
-            await msg.save();
-            document.getElementById('authorInput').value = '';
-            document.getElementById('contentInput').value = '';
-            loadComments();
+
+            try {
+                await fetch(KV_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'add', author, content })
+                });
+                document.getElementById('authorInput').value = '';
+                document.getElementById('contentInput').value = '';
+                loadComments();
+            } catch (err) {
+                alert('留言失败，请稍后再试');
+                console.error(err);
+            }
         }
 
-        function startEdit(objectId) {
-            const el = document.getElementById('content-' + objectId);
+        async function deleteComment(id) {
+            if (!confirm('确定删除这条留言吗？')) return;
+            try {
+                await fetch(KV_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'delete', id })
+                });
+                loadComments();
+            } catch (err) {
+                alert('删除失败');
+                console.error(err);
+            }
+        }
+
+        function startEdit(id) {
+            const el = document.getElementById('content-' + id);
             const text = el.innerText;
-            el.innerHTML = `<textarea class="editing-textarea" id="edit-${objectId}">${escapeHtml(text)}</textarea>
-                <button class="save-edit-btn" onclick="saveEdit('${objectId}')">保存</button>
+            el.innerHTML = `<textarea class="editing-textarea" id="edit-${id}">${escapeHtml(text)}</textarea>
+                <button class="save-edit-btn" onclick="saveEdit('${id}')">保存</button>
                 <button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
         }
 
-        async function saveEdit(objectId) {
-            const newContent = document.getElementById('edit-' + objectId).value.trim();
+        async function saveEdit(id) {
+            const newContent = document.getElementById('edit-' + id).value.trim();
             if (!newContent) { alert('内容不能为空'); return; }
-            const query = new AV.Query('Message');
-            const msg = await query.get(objectId);
-            msg.set('content', newContent);
-            await msg.save();
-            loadComments();
-        }
-
-        async function deleteComment(objectId) {
-            if (!confirm('确定删除这条留言吗？')) return;
-            const query = new AV.Query('Message');
-            const msg = await query.get(objectId);
-            await msg.destroy();
-            loadComments();
+            try {
+                await fetch(KV_API, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'edit', id, content: newContent })
+                });
+                loadComments();
+            } catch (err) {
+                alert('编辑失败');
+                console.error(err);
+            }
         }
 
         function escapeHtml(str) {
@@ -178,5 +196,6 @@
 
         loadComments();
     </script>
+
 </body>
 </html>
