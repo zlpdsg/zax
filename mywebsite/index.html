@@ -3,98 +3,427 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>给最好的朋友</title>
+    <title>我们的回忆</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-            font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
-            background: #fdf6f0;
-            color: #333;
+            font-family: "Noto Serif SC", "STSong", "Songti SC", "Microsoft YaHei", serif;
+            background: linear-gradient(180deg, #fef9f3 0%, #fdf0e6 30%, #fce8d5 60%, #fef9f3 100%);
+            color: #4a3728;
             line-height: 2;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
-        h1 { text-align: center; color: #c0392b; font-size: 28px; margin-bottom: 20px; }
-        .message-box {
-            background: #fff;
-            padding: 20px;
-            border-radius: 12px;
-            margin: 20px 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-        img { width: 100%; border-radius: 10px; margin: 15px 0; box-shadow: 0 3px 12px rgba(0,0,0,0.1); }
-        video { width: 100%; border-radius: 10px; margin: 15px 0; }
-        .date { color: #999; font-size: 14px; margin-top: 20px; }
 
-        .board-section { margin-top: 40px; border-top: 2px solid #e0d5cc; padding-top: 30px; }
-        .board-section h2 { text-align: center; color: #8b5e3c; margin-bottom: 20px; }
-
-        .comment-form { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .comment-form input, .comment-form textarea {
-            padding: 12px; border: 1px solid #ddd; border-radius: 8px;
-            font-size: 14px; font-family: inherit; resize: vertical;
+        /* 背景装饰 - 飘落花瓣 */
+        body::before {
+            content: "🌸 🌺 🌷 💮 🌼";
+            position: fixed;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            font-size: 24px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall 20s linear infinite;
+            letter-spacing: 80px;
+            text-align: center;
         }
-        .comment-form textarea { min-height: 80px; }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* 顶部标题 */
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .header .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #c4734f;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            color: #b8927c;
+            letter-spacing: 1px;
+        }
+
+        /* 寄语卡片 */
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px rgba(180, 130, 100, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(180, 130, 100, 0.18);
+        }
+
+        .card p {
+            font-size: 16px;
+            text-align: center;
+            color: #6b4d3a;
+        }
+
+        .card .highlight {
+            display: inline-block;
+            background: linear-gradient(120deg, #ffe0cc 0%, #ffe0cc 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 90%;
+            padding: 0 4px;
+        }
+
+        /* 照片区域 */
+        .photo-section {
+            margin-bottom: 10px;
+        }
+
+        .photo-section .date-tag {
+            display: inline-block;
+            background: #f0d5c0;
+            color: #8b5e3c;
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .photo-section img {
+            width: 100%;
+            border-radius: 16px;
+            margin: 10px 0 6px;
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.15);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .photo-section img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 36px rgba(160, 120, 80, 0.25);
+        }
+
+        .photo-section .caption {
+            color: #a08070;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        /* 分隔线 */
+        .divider {
+            text-align: center;
+            margin: 36px 0 20px;
+            color: #d4b896;
+            font-size: 18px;
+            letter-spacing: 12px;
+        }
+
+        /* 留言板 */
+        .board-section h2 {
+            text-align: center;
+            color: #c4734f;
+            font-size: 24px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .board-section .board-hint {
+            text-align: center;
+            color: #b8927c;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            padding: 14px 16px;
+            border: 1.5px solid #e8d5c4;
+            border-radius: 14px;
+            font-size: 15px;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            resize: vertical;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #4a3728;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #d4956b;
+            box-shadow: 0 0 0 3px rgba(212, 149, 107, 0.15);
+        }
+
+        .comment-form input::placeholder,
+        .comment-form textarea::placeholder {
+            color: #c4a88c;
+        }
+
+        .comment-form textarea {
+            min-height: 90px;
+        }
+
         .comment-form button {
-            padding: 12px 24px; background: #c0392b; color: #fff;
-            border: none; border-radius: 8px; cursor: pointer; font-size: 15px; align-self: flex-end;
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #d4956b 0%, #c4734f 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: inherit;
+            letter-spacing: 1px;
+            align-self: flex-end;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(196, 115, 79, 0.3);
         }
 
+        .comment-form button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(196, 115, 79, 0.4);
+        }
+
+        .comment-form button:active {
+            transform: scale(0.97);
+        }
+
+        /* 留言条目 */
         .comment-item {
-            background: #fff; padding: 15px; border-radius: 10px;
-            margin-bottom: 15px; box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 18px 20px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 3px 16px rgba(160, 120, 80, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
         }
-        .comment-item .author { font-weight: bold; color: #8b5e3c; margin-bottom: 5px; }
-        .comment-item .time { font-size: 12px; color: #999; margin-left: 10px; }
-        .comment-item .content { color: #555; line-height: 1.6; word-break: break-word; }
-        .comment-item .actions { margin-top: 8px; font-size: 13px; }
-        .comment-item .actions a { color: #c0392b; cursor: pointer; margin-right: 12px; text-decoration: none; }
 
+        .comment-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.14);
+        }
+
+        .comment-item .author {
+            font-weight: 700;
+            color: #c4734f;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+
+        .comment-item .time {
+            font-size: 11px;
+            color: #bfa590;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+
+        .comment-item .content {
+            color: #5c4033;
+            line-height: 1.7;
+            word-break: break-word;
+            font-size: 15px;
+        }
+
+        .comment-item .actions {
+            margin-top: 10px;
+            font-size: 13px;
+        }
+
+        .comment-item .actions a {
+            color: #d4956b;
+            cursor: pointer;
+            margin-right: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+
+        .comment-item .actions a:hover {
+            color: #a0522d;
+        }
+
+        /* 编辑区域 */
         .editing-textarea {
-            width: 100%; min-height: 60px; padding: 10px; border: 1px solid #ddd;
-            border-radius: 6px; font-family: inherit; font-size: 14px; margin: 8px 0; resize: vertical;
+            width: 100%;
+            min-height: 60px;
+            padding: 12px;
+            border: 1.5px solid #e8d5c4;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            margin: 8px 0;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.8);
+            color: #4a3728;
         }
-        .save-edit-btn, .cancel-edit-btn {
-            padding: 6px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 13px; margin-right: 8px;
+
+        .editing-textarea:focus {
+            outline: none;
+            border-color: #d4956b;
         }
-        .save-edit-btn { background: #27ae60; color: #fff; }
-        .cancel-edit-btn { background: #ccc; color: #333; }
+
+        .save-edit-btn,
+        .cancel-edit-btn {
+            padding: 7px 18px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+            margin-right: 8px;
+            transition: transform 0.2s;
+        }
+
+        .save-edit-btn {
+            background: linear-gradient(135deg, #8fbc8f 0%, #6b9e6b 100%);
+            color: #fff;
+        }
+
+        .cancel-edit-btn {
+            background: #e8d5c4;
+            color: #6b4d3a;
+        }
+
+        .save-edit-btn:hover,
+        .cancel-edit-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        /* 页脚 */
+        .footer {
+            text-align: center;
+            color: #c4a88c;
+            font-size: 13px;
+            margin-top: 44px;
+            letter-spacing: 1px;
+        }
+
+        .footer span {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+
+        /* 响应式 */
+        @media (max-width: 600px) {
+            .header h1 { font-size: 26px; }
+            .card p { font-size: 14px; }
+            .comment-form button { align-self: center; width: 100%; }
+        }
     </style>
 </head>
 <body>
 
-    <h1>🌍 无论多远，友谊不变</h1>
+    <div class="container">
 
-    <div class="message-box">
-        <p>嘿！听说你要去英国了。</p>
-        <p>这个网站是专门为你建的，我会在这里更新照片和想对你说的话。不管你在地球哪一边，打开这个网址就能看到。</p>
-        <p>一路顺风，常联系！</p>
-    </div>
-
-    <p class="date">📷 2024年 我们的合照</p>
-    <img src="photo1.jpg" alt="合照1">
-    <p>这张还记得在哪拍的吗？</p>
-
-    <p class="date">📷 更多回忆</p>
-    <img src="photo2.jpg" alt="合照2">
-    <p>那天真的超开心</p>
-
-    <div class="board-section">
-        <h2>📝 留言板</h2>
-
-        <div class="comment-form">
-            <input type="text" id="authorInput" placeholder="你的名字" maxlength="20" />
-            <textarea id="contentInput" placeholder="说点什么吧..." maxlength="500"></textarea>
-            <button onclick="postComment()">💬 留言</button>
+        <!-- 顶部 -->
+        <div class="header">
+            <span class="icon">🌍</span>
+            <h1>无论多远，友谊不变</h1>
+            <p class="subtitle">—— 给最好的朋友</p>
         </div>
 
-        <div id="commentList">加载中...</div>
+        <!-- 寄语卡片 -->
+        <div class="card">
+            <p>嘿！听说你要去<span class="highlight">英国</span>了。</p>
+            <p>这个网站是专门为你建的，我会在这里更新照片和想对你说的话。</p>
+            <p>不管你在地球哪一边，打开这个网址就能看到。</p>
+            <p>一路顺风，<span class="highlight">常联系</span>！✨</p>
+        </div>
+
+        <!-- 照片区域 -->
+        <div class="photo-section">
+            <span class="date-tag">📷 2024年 我们的合照</span>
+            <img src="photo1.jpg" alt="合照1">
+            <p class="caption">这张还记得在哪拍的吗？</p>
+
+            <span class="date-tag">📷 更多回忆</span>
+            <img src="photo2.jpg" alt="合照2">
+            <p class="caption">那天真的超开心 🥰</p>
+        </div>
+
+        <!-- 分隔线 -->
+        <div class="divider">· · ✿ · ·</div>
+
+        <!-- 留言板 -->
+        <div class="board-section">
+            <h2>📝 留言板</h2>
+            <p class="board-hint">想说点什么，就写在这里吧</p>
+
+            <div class="comment-form">
+                <input type="text" id="authorInput" placeholder="你的名字" maxlength="20" />
+                <textarea id="contentInput" placeholder="写一些想说的话..." maxlength="500"></textarea>
+                <button onclick="postComment()">💬 留言</button>
+            </div>
+
+            <div id="commentList">加载中...</div>
+        </div>
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <p>用 <span>🐱</span> 搭建 · 跨越山海 · 永远在线</p>
+        </div>
+
     </div>
 
     <script>
-        // ========== 把这里换成你的值 ==========
-        const KV_URL = 'https://absolute-doe-123636.upstash.io';
+        // ========== 这里换成你的值 ==========
+       const KV_URL = 'https://absolute-doe-123636.upstash.io';
         const KV_TOKEN = 'gQAAAAAAAeL0AAIgcDFkNjg3Nzc5ZWJiNDM0M2NlOWU4NjUxNjhmZjk3ODNjOQ';
 
         const commentListEl = document.getElementById('commentList');
@@ -124,7 +453,7 @@
                 const messages = raw ? JSON.parse(raw) : [];
 
                 if (messages.length === 0) {
-                    commentListEl.innerHTML = '<p style="text-align:center;color:#999;">还没有留言，来说一句吧 💬</p>';
+                    commentListEl.innerHTML = '<p style="text-align:center;color:#b8927c;font-size:14px;">还没有留言，来做第一个留言的人吧 🌸</p>';
                     return;
                 }
 
@@ -192,7 +521,7 @@
             const el = document.getElementById('content-' + id);
             const text = el.innerText;
             el.innerHTML = `<textarea class="editing-textarea" id="edit-${id}">${escapeHtml(text)}</textarea>
-                <button class="save-edit-btn" onclick="saveEdit('${id}')">保存</button>
+                <button class="save-edit-btn" onclick="saveEdit('${id}')">💾 保存</button>
                 <button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
         }
 
