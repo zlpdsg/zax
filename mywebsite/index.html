@@ -93,14 +93,35 @@
     </div>
 
     <script>
-        const KV_API = '/api/kv';
+        // ========== 把这里换成你的值 ==========
+        const KV_URL = 'https://absolute-doe-123636.upstash.io';
+        const KV_TOKEN = 'gQAAAAAAAeL0AAIgcDFkNjg3Nzc5ZWJiNDM0M2NlOWU4NjUxNjhmZjk3ODNjOQ';
+
         const commentListEl = document.getElementById('commentList');
+
+        async function kvGet(key) {
+            const res = await fetch(`${KV_URL}/get/${key}`, {
+                headers: { 'Authorization': `Bearer ${KV_TOKEN}` }
+            });
+            const data = await res.json();
+            return data.result;
+        }
+
+        async function kvSet(key, value) {
+            await fetch(`${KV_URL}/set/${key}`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${KV_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(value)
+            });
+        }
 
         async function loadComments() {
             try {
-                const res = await fetch(KV_API + '?action=list');
-                const data = await res.json();
-                const messages = data.messages || [];
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
 
                 if (messages.length === 0) {
                     commentListEl.innerHTML = '<p style="text-align:center;color:#999;">还没有留言，来说一句吧 💬</p>';
@@ -135,16 +156,20 @@
             if (!content) { alert('请输入留言内容'); return; }
 
             try {
-                await fetch(KV_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'add', author, content })
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
+                messages.push({
+                    id: Date.now().toString(),
+                    author,
+                    content,
+                    time: new Date().toISOString()
                 });
+                await kvSet('messages', messages);
                 document.getElementById('authorInput').value = '';
                 document.getElementById('contentInput').value = '';
                 loadComments();
             } catch (err) {
-                alert('留言失败，请稍后再试');
+                alert('留言失败');
                 console.error(err);
             }
         }
@@ -152,11 +177,10 @@
         async function deleteComment(id) {
             if (!confirm('确定删除这条留言吗？')) return;
             try {
-                await fetch(KV_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'delete', id })
-                });
+                const raw = await kvGet('messages');
+                let messages = raw ? JSON.parse(raw) : [];
+                messages = messages.filter(m => m.id !== id);
+                await kvSet('messages', messages);
                 loadComments();
             } catch (err) {
                 alert('删除失败');
@@ -176,11 +200,11 @@
             const newContent = document.getElementById('edit-' + id).value.trim();
             if (!newContent) { alert('内容不能为空'); return; }
             try {
-                await fetch(KV_API, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ action: 'edit', id, content: newContent })
-                });
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
+                const msg = messages.find(m => m.id === id);
+                if (msg) msg.content = newContent;
+                await kvSet('messages', messages);
                 loadComments();
             } catch (err) {
                 alert('编辑失败');
