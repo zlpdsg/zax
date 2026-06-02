@@ -149,6 +149,45 @@
             margin-bottom: 8px;
         }
 
+  /* 视频区域 */
+        .video-section {
+            margin-bottom: 10px;
+        }
+
+        .video-section .date-tag {
+            display: inline-block;
+            background: #f0d5c0;
+            color: #8b5e3c;
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .video-section video {
+            width: 100%;
+            border-radius: 16px;
+            margin: 10px 0 6px;
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.15);
+            transition: transform 0.4s, box-shadow 0.4s;
+            outline: none;
+        }
+
+        .video-section video:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 36px rgba(160, 120, 80, 0.25);
+        }
+
+        .video-section .caption {
+            color: #a08070;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
         /* 分隔线 */
         .divider {
             text-align: center;
@@ -382,10 +421,10 @@
         <div class="card">
             <p><span class="highlight">Hi!  安欣</span>！✨</p>
 
-            <p>欢迎来到这个独属于你一人的<span class="highlight">网络世界/span>！✨</p>
+            <p>欢迎来到这个独属于你一人的<span class="highlight">网络世界✨</p>
             <p>这个网站是专门为你而建，不管你是在地球哪一边，是在英国也好，在广丰也好，只要打开了这个网址，那么我希望你可以完全放松下来，因为这里是真正只属于你一个人的世界，无论是开心亦或者难过，都可以在最后面的留言板倾述你的心情（偷偷和你讲，其实留言板是最难做的，奶贝的，我一开始还以为很简单，把他放到最后搞，结果是最难的>_<）。</p>
             <p>在留言板那里我给你说了一些我的心里话，当然你可以选择的看，如果你在否定自己的话不妨看一看</p>
-            <p>好啦，既然你打开了网站，我猜你应该是遇到了一些不开心或者不愉快的事情呢，我希望你每次打开的时候都能收获快乐（因为我会一直更新下去的哦）---当然如果你希望我去回复你的留言我就会打开这个网站区和你谈谈心的哦，不过你如果不愿意别人打扰你这个小小世界话也完全ok（因为本来做这个网站的初衷就是希望哪怕你在差不多一万公里外的地方，偶尔有时候会觉得无所适从啊，不属于这个地方啊之类的，那么这个小小世界可以让你有自己的归属），那么在把那个锦囊给你之后我便不会再打开这个网站，当然愿意和我倾诉你的不快我肯定是非常非常开心的，我感觉别人愿意把心里话讲给我听我会感觉十分的荣幸和快乐，就像上次你拿最佳辩手那一次愿意讲给我听，额，不讲不讲，不愉快的事情我们不讲哈。</p>
+            <p>好啦，既然你打开了网站，我猜你应该是遇到了一些不开心或者不愉快的事情呢，我希望你每次打开的时候都能收获快乐（因为我会一直更新下去的哦）---当然如果你希望我去回复你的留言我就会打开这个网站和你谈谈心的哦，不过你如果不愿意别人打扰你这个小小世界话也完全ok（因为本来做这个网站的初衷就是希望哪怕你在差不多一万公里外的地方，偶尔有时候会觉得无所适从啊，不属于这个地方啊之类的，那么这个小小世界可以让你有自己的归属），那么在把那个锦囊给你之后我便不会再打开这个网站，当然愿意和我倾诉你的不快我肯定是非常非常开心的，我感觉别人愿意把心里话讲给我听我会感觉十分的荣幸和快乐，就像上次你拿最佳辩手那一次愿意讲给我听，额，不讲不讲，不愉快的事情我们不讲哈。</p>
           <p>你看到这里的时候我猜你会有一个这样的疑问，网络世界和自己的朋友圈，备忘录有什么区别？（没有也得有，我高低得给你讲讲~~）因为你没有学计算机嘛，制作网站的过程我会在留言板给出，你有兴趣再看，但是呢，一个网站你可以理解成高楼林立的城市中的一个小别墅，但是你手机上的app呢就像你是一个访问者，并不是拥有者，你做的一切在别的app上面其实都是公开的，但是呢，这个网站我已经在背后上了锁，是真正属于你一个人的，不被打扰完全私密的小小世界</p>
         </div>
         <!-- 照片区域 -->
@@ -397,6 +436,17 @@
             <span class="date-tag">📷 更多回忆</span>
             <img src="photo2.jpg" alt="合照2">
             <p class="caption">那天真的超开心 🥰</p>
+        </div>
+
+        <div class="divider">· · ✿ · ·</div>
+
+        <!-- 视频区域 -->
+        <div class="video-section">
+            <span class="date-tag">🎬 珍贵影像</span>
+            <video src="video1.mp4" controls poster="photo1.jpg">
+                你的浏览器不支持播放视频
+            </video>
+            <p class="caption">每次看都会笑出声 😂</p>
         </div>
 
         <!-- 分隔线 -->
