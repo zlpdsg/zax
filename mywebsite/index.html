@@ -17,6 +17,7 @@
             overflow-x: hidden;
         }
 
+        /* 背景装饰 - 飘落花瓣 */
         body::before {
             content: "🌸 🌺 🌷 💮 🌼 🌸 🌺 🌷 💮 🌼 🌸 🌺 🌷 💮 🌼";
             position: fixed;
@@ -37,6 +38,7 @@
             100% { transform: translateY(100vh) rotate(360deg); }
         }
 
+        /* 点击飘出小心心 */
         .heart-particle {
             position: fixed;
             pointer-events: none;
@@ -46,8 +48,14 @@
         }
 
         @keyframes floatUp {
-            0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
-            100% { opacity: 0; transform: translateY(-120px) scale(0.3) rotate(45deg); }
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-120px) scale(0.3) rotate(45deg);
+            }
         }
 
         .container {
@@ -58,6 +66,7 @@
             z-index: 1;
         }
 
+        /* 顶部标题 */
         .header {
             text-align: center;
             margin-bottom: 36px;
@@ -89,6 +98,7 @@
             letter-spacing: 1px;
         }
 
+        /* 寄语卡片 */
         .card {
             background: rgba(255, 255, 255, 0.75);
             backdrop-filter: blur(10px);
@@ -120,6 +130,7 @@
             padding: 0 4px;
         }
 
+        /* 照片区域 */
         .photo-section {
             margin-bottom: 10px;
         }
@@ -157,6 +168,7 @@
             margin-bottom: 8px;
         }
 
+        /* 视频区域 */
         .video-section {
             margin-bottom: 10px;
         }
@@ -173,71 +185,18 @@
             letter-spacing: 1px;
         }
 
-        .video-section .caption {
-            color: #a08070;
-            font-size: 14px;
-            text-align: center;
-            font-style: italic;
-            margin-bottom: 8px;
-        }
-
-        .click-to-play {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-            margin: 10px 0 6px;
-            box-shadow: 0 6px 24px rgba(160,120,80,0.15);
-            cursor: pointer;
-            transition: transform 0.3s;
-        }
-
-        .click-to-play:hover {
-            transform: scale(1.02);
-        }
-
-        .click-to-play img {
-            width: 100%;
-            display: block;
-            border-radius: 16px;
-        }
-
-        .play-btn {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 70px;
-            height: 70px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s;
-        }
-
-        .play-btn span {
-            color: #fff;
-            font-size: 30px;
-            margin-left: 5px;
-        }
-
-        .click-to-play:hover .play-btn {
-            background: rgba(0,0,0,0.8);
-        }
-
-        .video-container {
-            display: none;
+        .video-wrapper {
             position: relative;
             padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             border-radius: 16px;
             margin: 10px 0 6px;
-            box-shadow: 0 6px 24px rgba(160,120,80,0.15);
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.15);
+            background: rgba(0, 0, 0, 0.05);
         }
 
-        .video-container iframe {
+        .video-wrapper iframe {
             position: absolute;
             top: 0;
             left: 0;
@@ -247,6 +206,45 @@
             border: none;
         }
 
+        .video-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            color: #8b5e3c;
+            font-size: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-fallback button {
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: #c4734f;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .video-section .caption {
+            color: #a08070;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        /* 翻牌消消乐 */
         .game-section {
             text-align: center;
             margin-top: 30px;
@@ -371,6 +369,7 @@
             background: #f0d5c0;
         }
 
+        /* 分隔线 */
         .divider {
             text-align: center;
             margin: 36px 0 20px;
@@ -379,6 +378,7 @@
             letter-spacing: 12px;
         }
 
+        /* 留言板 */
         .board-section h2 {
             text-align: center;
             color: #c4734f;
@@ -455,6 +455,7 @@
             transform: scale(0.97);
         }
 
+        /* 留言条目 */
         .comment-item {
             background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(8px);
@@ -511,6 +512,7 @@
             color: #a0522d;
         }
 
+        /* 编辑区域 */
         .editing-textarea {
             width: 100%;
             min-height: 60px;
@@ -557,6 +559,7 @@
             transform: translateY(-1px);
         }
 
+        /* 页脚 */
         .footer {
             text-align: center;
             color: #c4a88c;
@@ -576,6 +579,7 @@
             50% { transform: scale(1); }
         }
 
+        /* 响应式 */
         @media (max-width: 600px) {
             .header h1 { font-size: 26px; }
             .card p { font-size: 14px; }
@@ -588,6 +592,7 @@
 <body>
     <div class="container">
 
+        <!-- 顶部 -->
         <div class="header">
             <span class="icon">🌍</span>
             <h1>海内存知己，天涯若比邻</h1>
@@ -595,47 +600,92 @@
             <p class="subtitle">—— 给最好的朋友</p>
         </div>
 
+        <!-- 寄语卡片 -->
         <div class="card">
-            <p><span class="highlight">Hi! 小欣同学</span>！✨</p>
+            <p><span class="highlight">Hi! 🌟🌟</span>！✨</p>
             <p>欢迎来到这个独属于你一人的<span class="highlight">解忧杂货铺-网络世界</span>！✨</p>
             <p>这个网站是专门为你而建，不管你是在地球哪一边，是在英国也好，在广丰也好，只要打开了这个网址，那么我希望你可以放松下来，因为这里是真正只属于你一个人的世界，无论是开心亦或者难过，都可以在最后面的留言板倾述你的心情</p>
             <p>在留言板那里我给你说了一些我的心里话，当然你可以选择的看，如果你在否定自己的话不妨看一看</p>
             <p>好啦，既然你打开了网站，我猜你应该是遇到了一些不开心或者不愉快的事情呢，我希望你每次打开的时候都能收获快乐（因为我会一直更新下去的哦）---当然如果你希望我去回复你的留言我就会打开这个网站和你谈谈心的哦，不过你如果不愿意别人打扰你这个小小世界话也完全ok（因为本来做这个网站的初衷就是希望哪怕你在差不多一万公里外的地方，偶尔有时候会觉得无所适从啊，不属于这个地方啊之类的，那么这个小小世界可以让你有自己的归属），那么在把那个锦囊给你之后我便不会再打开这个网站，当然愿意和我倾诉你的不快我肯定是非常非常开心的，我感觉别人愿意把心里话讲给我听我会感觉十分的荣幸和快乐，就像上次你拿最佳辩手那一次愿意讲给我听，额，不讲不讲，不愉快的事情我们不讲哈。</p>
-            <p>你看到这里的时候或许会有一个这样的疑问，网络世界和自己的朋友圈，备忘录有什么区别？（我高低得给你讲讲~~）因为你没有学计算机嘛，制作网站的过程我会在留言板给出，你有兴趣再看，但是呢，一个网站你可以理解成高楼林立的城市中的一个小别墅，但是你手机上的app呢就像你是一个访问者，并不是拥有者，你做的一切在别的app上面其实都是公开的，但是呢，这个网站我已经在背后上了锁，是真正属于你一个人的，不被打扰完全私密的小小世界</p>
+            <p>或许会有一个这样的疑问，网络世界和自己的朋友圈，备忘录有什么区别？制作网站的过程我会在留言板给出，你有兴趣再看，但是呢，一个网站你可以理解成高楼林立的城市中的一个小别墅，但是你手机上的app呢就像你是一个访问者，并不是拥有者，你做的一切在别的app上面其实都是公开的，但是呢，这个网站我已经在背后上了锁，是真正属于你一个人的，不被打扰完全私密的小小世界</p>
             <div class="divider">· · ✿ · ·</div>
             <p>视频似乎怎么改都有点卡，那就趁刷新的时间现在说说我心里面的zax，2017 年，我第一次看到你，在城南小学，当时我坐在教室第二大组的中间，你没有位置，是站在教室后面的，或者是命运的使然让我回头了，一眼就看到一堆人里面的你，你扎着双马尾，背着手，略显拘束。当时的我无论如何也想不到我们未来的样子与交集。</p>
-            <p>2018年，我被老师分到了你的左后方，那是我第一次离你那么近，此前只是坐在和你十万八千里的地方，只是从别人口中知道你是一个人美心善的好好同学，你还记得我搬过去我们讲的第一句话吗（你肯定记不得，谁会把一句话记个十年）----第一句话是那天 分的小组，你是组长来着，然后我们两个去扫包干区---走吧！。</p>
-            <p>同年，我们逐渐熟络了起来，我记得当时总是想为什么不能和你当同桌，好在我们经常一块去扫地。古灵精怪，心灵手巧，人美心善.....无数的形容词都无法描述你，回眸一笑百媚生，六宫粉黛无颜色,我仿佛能从回眸中看出你心底的善意</p>
-            <p>勤勉笃谨，或许你会觉得并不是，但我眼里你总是在努力的听课，总是在为了自己的目标在不懈努力中。我有时候会想你的英语怎么这么好，现在想想以前也不足为奇，你的听写总是全对，成绩也一直那么好，努力到现在，真的已经很厉害很厉害了，我的英语要有你一半那都是祖坟冒青烟了。或许是你一坐就是一整天的图书馆，或许是对待什么事情都认真的态度，才有此成就。落花飘于窗台前，流水流至月光下，倘今时有困顿烦忧，不妨回望来路，向来所为已是至佳，不必苛责自苦</p>
+            <p>2018年，我被老师分到了你的左后方，那是我第一次离你那么近，此前只是坐在和你十万八千里的地方，只是从别人口中知道你是一个心地善良的好好同学，你还记得我搬过去我们讲的第一句话吗（你肯定记不得，谁会把一句话记个十年）----第一句话是那天 分的小组，你是组长来着，然后我们两个去扫包干区---走吧！。</p>
+            <p>同年，我们逐渐熟络了起来，我们经常一块去扫地。古灵精怪，心灵手巧，人美心善.....无数的形容词都无法描述你，回眸一笑百媚生，六宫粉黛无颜色,我仿佛能从回眸中看出你心底的善意</p>
+            <p>勤勉笃谨，或许你会觉得并不是，但我眼里你总是在努力的听课，总是在为了自己的目标在不懈努力中。我有时候会想你的英语怎么这么好，现在想想以前也不足为奇，你的听写总是全对，成绩也一直那么好，努力到现在，真的已经很厉害很厉害了，我的英语要有你一半那都是祖坟冒青烟了。或是无数个图书馆的日夜，或许每遇失意总能爬起的态度，才有此成就。落花飘于窗台前，流水流至月光下，倘今时有困顿烦忧，不妨回望来路，向来所为已是至佳，不必苛责自苦</p>
             <p>人美心善，都说爱惜小猫小狗的人上辈子是天使来的，我猜你就是天使转世而来，对谁都保持那样的友善，你都忘记我是哪个人来着了，还说要和我一块玩游戏，不知道是不是客套话，你就不怕我是骗子吗.......。不能一块打游戏还拍我拍半天，推荐的视频列表一堆人也只有你会问我怎么了。感觉你不太会拒绝别人，有时候不得不爽约的时候又疯狂道歉，其实没什么的，你总是习惯于他人温柔，其实自己也值得被温柔接住。</p>
             <p>三观端正，遇到不公敢起而抗之，有目标定能不懈追之，怀善心常以温善待之。但是你常常会因为一些事情使自己陷入内耗中，时常觉得自己还不够好，又会纠结自己有没有做错，虽然说看起来脾气很好，但是当你遇到触碰到你的三观，底线的时候你也会使自己冷静下来，不向不公妥协。</p>
-            <p>这里不是很确定是不是，我想你会比较更倾向于受伤时自己自愈，我也怕你会这样，怕你习惯躲起来自我消化，怕你对朋友毫无保留，容易被辜负，被消耗（这一句是我在做四六级真题的时候也看到了的，讲的是当你认为你对你的朋友很熟悉的时候，然而对方却不一定，这就会造成你会在这段关系中付出更多）所以我希望未来你可以更自信，希望这个树洞能够变成你的情绪回收站，好吗，小欣同学。</p>
-            <p>当然你还有很多很多难能可贵的品质，我就不再一一讲了，那不过是璀璨星空中不起眼的一颗颗而已，you are the best person i have ever met in my life，please be more confident，希望以后有机会能和你吹着晚风，听着蝉鸣一边散步一边和你谈论这一颗颗星星。</p>
+            <p>这里不是很确定是不是，我想你会比较更倾向于受伤时自己自愈，我也怕你会这样，怕你习惯躲起来自我消化，怕你对朋友毫无保留，容易被辜负，被消耗（这一句是我在做四六级真题的时候也看到了的，讲的是当你认为你对你的朋友很熟悉的时候，然而对方却不一定，这就会造成你会在这段关系中付出更多）这是我做这个网站的原因之一。所以我希望未来你可以更自信。ok?🌟🌟?</p>
+            <p>当然你还有很多很多难能可贵的品质，我就不再一一讲了，那不过是璀璨星空中不起眼的一颗颗而已，you are the best person i have ever met in my life，please be more confident。</p>
         </div>
 
+        <!-- 照片区域 -->
         <div class="photo-section">
             <span class="date-tag">📷 白孔雀</span>
             <img src="photo1.jpg" alt="照片1">
             <p class="caption">听说遇到白孔雀开屏的人会心想事成哦，这是我在我们学校拍的哦，好看不，赶紧许愿让不开心走开。</p>
 
-            <span class="date-tag">我也不知道你是什么时候看到这个网站的，但是估计是在大洋彼岸，那在这里祝你圣诞节快乐啦</span>
-            <img src="photo5.jpg" alt="best wish">
-            <p class="caption">em....画的不咋地.....</p>
+            <span class="date-tag">分享一组好看的风景照，好风景带来好心情哦</span>
+            <img src="fengjing1.jpg" alt="best wish">
+            <p class="caption">看夕阳坠落的瞬间，所有烦恼都慢慢稀释</p>
+
+<span class="date-tag">等一场橘色黄昏，把心事交给夕阳</span>
+            <img src="fengjing2.jpg" alt="best wish">
+
+<span class="date-tag">夕阳会落在你身上，你也会快乐一场</span>
+            <img src="fengjing3.jpg" alt="best wish">
+
+<span class="date-tag">把烦恼丢进山野，让风景治愈所有疲惫</span>
+            <img src="fengjing4.jpg" alt="best wish">
+
+<span class="date-tag">青山不语，风月无边</span>
+            <img src="fengjing5.jpg" alt="best wish">
+
+   <span class="date-tag">要是不开心的话，小斗肖茂密来找你玩</span>
+            <img src="dog1.jpg" alt="best wish">
+
+   <span class="date-tag">再不开心，叫小斗拿鼻筒子戳你</span>
+            <img src="dog2.jpg" alt="best wish">
+
+   <span class="date-tag">也许和小咪一样睡一觉心情就好了呢</span>
+            <img src="dog4.jpg" alt="best wish">
+
+   <span class="date-tag">和你讲几个很有意思的小故事</span>
+            <img src="int1.jpg" alt="best wish">
+            <p class="caption">请你看庐山脚下的打铁花，记得那天朋友看到别人发朋友圈，兴致勃勃的说要去庐山玩，山脚下有什么超级大活动，结果过去发现就是巨普通的小吃街，当时温度就几度，于是我被他拖着在几度的冷风中看完了这个打铁花.........</p>
+
+   <span class="date-tag">store2</span>
+            <img src="int2.jpg" alt="best wish">
+            <p class="caption">那天考完试，兴冲冲的买了好多好吃的，然后也没看仔细，外卖写的是可乐，我如饕餮般狂喝了一大口，随之而来的是一股发臭的中药味，我chovy中国可乐......</p>
+
+   <span class="date-tag">做了老爹的专武，保你一路平平安安</span>
+            <img src="int3.jpg" alt="best wish">
+
+   <span class="date-tag">男神被绑在广丰了。。。</span>
+            <img src="int4.jpg" alt="best wish">
+            <p class="caption">快去救他>..<</p>
+
         </div>
 
-        <!-- 视频区域 - 点击展开播放 -->
+
+        <!-- 视频区域 -->
         <div class="video-section">
             <span class="date-tag">🎬 珍贵影像</span>
-            <div class="click-to-play" onclick="loadVideo()">
-                <img src="photo1.jpg" alt="点击播放视频">
-                <div class="play-btn">
-                    <span>▶</span>
+            <div class="video-wrapper" id="videoWrapper">
+                <iframe
+                    id="bilibiliVideo"
+                    src="//player.bilibili.com/player.html?bvid=BV1dCEt6HEqc&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    onerror="showVideoFallback()"
+                    onload="hideVideoFallback()">
+                </iframe>
+                <div class="video-fallback" id="videoFallback">
+                    <p>😢 视频暂未加载</p>
+                    <p style="font-size:12px;color:#999;">可能是网络波动，刷新页面试试</p>
+                    <button onclick="location.reload()">🔄 刷新页面</button>
                 </div>
             </div>
-            <div class="video-container" id="videoContainer">
-                <iframe id="bilibiliIframe" src="" allowfullscreen="true"></iframe>
-            </div>
-            <p class="caption">👆 点击上方图片即可播放视频</p>
+            <p class="caption">找了一些有趣的视频希望能让你开心</p>
         </div>
 
         <!-- 翻牌消消乐 -->
@@ -645,14 +695,16 @@
             <div class="game-board" id="gameBoard"></div>
             <button class="game-reset-btn" onclick="resetGame()">🔄 重新开始</button>
             <div class="game-reward" id="gameReward">
-                <p class="reward-caption">🎉 全部消除！这张照片送给你</p>
-                <img src="photo3.jpg" alt="惊喜照片">
+                <p class="reward-caption">🎉 全部消除！太棒啦！这张照片送给你，我猜你打开网站的时候应该差不多到圣诞节前后了，这是我自己用白板画的圣诞树，圣诞节快乐！，祝🌟🌟天天快乐</p>
+                <img src="photo5.jpg" alt="惊喜照片">
                 <p class="caption" style="margin-top:6px;">希望你喜欢这份小惊喜 🥰</p>
             </div>
         </div>
 
+        <!-- 分隔线 -->
         <div class="divider">· · ✿ · ·</div>
 
+        <!-- 留言板 -->
         <div class="board-section">
             <h2>📝 留言板</h2>
             <p class="board-hint">想说点什么，就写在这里吧</p>
@@ -666,6 +718,7 @@
             <div id="commentList">加载中...</div>
         </div>
 
+        <!-- 页脚 -->
         <div class="footer">
             <p><span>🐱🐱</span> 搭建 · 跨越山海 · 永远在线</p>
         </div>
@@ -695,20 +748,33 @@
             setTimeout(() => heart.remove(), 1500);
         });
 
-        // ========== 点击加载视频 ==========
-        function loadVideo() {
-            const clickDiv = document.querySelector('.click-to-play');
-            const container = document.getElementById('videoContainer');
-            clickDiv.style.display = 'none';
-            container.style.display = 'block';
-            document.getElementById('bilibiliIframe').src = '//player.bilibili.com/player.html?bvid=BV1dCEt6HEqc&high_quality=1&autoplay=1';
+        // ========== 视频加载备用方案 ==========
+        function showVideoFallback() {
+            document.getElementById('videoFallback').style.display = 'flex';
         }
+        function hideVideoFallback() {
+            document.getElementById('videoFallback').style.display = 'none';
+        }
+        // 5秒后检测视频是否加载成功
+        setTimeout(() => {
+            const iframe = document.getElementById('bilibiliVideo');
+            try {
+                if (iframe.contentDocument === null || iframe.contentWindow === null) {
+                    // iframe 可能被浏览器拦截了
+                }
+            } catch (e) {
+                showVideoFallback();
+            }
+        }, 5000);
 
         // ========== 翻牌消消乐 ==========
         (function() {
             const EMOJIS = ['🌸', '🌟', '💫', '🎀', '🍀', '💖', '🦋', '✨'];
             const CARDS = [...EMOJIS, ...EMOJIS];
-            let firstCard = null, secondCard = null, lockBoard = false, matchedCount = 0;
+            let firstCard = null;
+            let secondCard = null;
+            let lockBoard = false;
+            let matchedCount = 0;
 
             function shuffle(arr) {
                 for (let i = arr.length - 1; i > 0; i--) {
@@ -723,13 +789,23 @@
                 const reward = document.getElementById('gameReward');
                 board.innerHTML = '';
                 reward.style.display = 'none';
-                firstCard = null; secondCard = null; lockBoard = false; matchedCount = 0;
+                firstCard = null;
+                secondCard = null;
+                lockBoard = false;
+                matchedCount = 0;
+
                 const shuffled = shuffle([...CARDS]);
                 shuffled.forEach((emoji, index) => {
                     const tile = document.createElement('div');
                     tile.className = 'card-tile';
                     tile.dataset.emoji = emoji;
-                    tile.innerHTML = `<div class="card-inner"><div class="card-back">❓</div><div class="card-front">${emoji}</div></div>`;
+                    tile.dataset.index = index;
+                    tile.innerHTML = `
+                        <div class="card-inner">
+                            <div class="card-back">❓</div>
+                            <div class="card-front">${emoji}</div>
+                        </div>
+                    `;
                     tile.addEventListener('click', () => flipCard(tile));
                     board.appendChild(tile);
                 });
@@ -739,8 +815,14 @@
                 if (lockBoard) return;
                 if (tile.classList.contains('flipped') || tile.classList.contains('matched')) return;
                 if (tile === firstCard) return;
+
                 tile.classList.add('flipped');
-                if (!firstCard) { firstCard = tile; return; }
+
+                if (!firstCard) {
+                    firstCard = tile;
+                    return;
+                }
+
                 secondCard = tile;
                 lockBoard = true;
                 checkMatch();
@@ -767,14 +849,20 @@
                 }
             }
 
-            function resetTurn() { firstCard = null; secondCard = null; lockBoard = false; }
+            function resetTurn() {
+                firstCard = null;
+                secondCard = null;
+                lockBoard = false;
+            }
+
             window.resetGame = createBoard;
             createBoard();
         })();
 
-        // ========== KV 配置 ==========
+        // ========== 你的 KV 配置 ==========
         const KV_URL = 'https://absolute-doe-123636.upstash.io';
         const KV_TOKEN = 'gQAAAAAAAeL0AAIgcDFkNjg3Nzc5ZWJiNDM0M2NlOWU4NjUxNjhmZjk3ODNjOQ';
+
         const commentListEl = document.getElementById('commentList');
 
         async function kvGet(key) {
@@ -788,7 +876,10 @@
         async function kvSet(key, value) {
             await fetch(`${KV_URL}/set/${key}`, {
                 method: 'POST',
-                headers: { 'Authorization': `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+                headers: {
+                    'Authorization': `Bearer ${KV_TOKEN}`,
+                    'Content-Type': 'application/json'
+                },
                 body: JSON.stringify(value)
             });
         }
@@ -797,20 +888,31 @@
             try {
                 const raw = await kvGet('messages');
                 const messages = raw ? JSON.parse(raw) : [];
+
                 if (messages.length === 0) {
                     commentListEl.innerHTML = '<p style="text-align:center;color:#b8927c;font-size:14px;">还没有留言，来做第一个留言的人吧 🌸</p>';
                     return;
                 }
+
                 let html = '';
                 messages.reverse().forEach(msg => {
                     const author = msg.author || '匿名';
                     const content = msg.content || '';
                     const time = new Date(msg.time).toLocaleString('zh-CN');
-                    html += `<div class="comment-item"><div class="author">${escapeHtml(author)}<span class="time">${time}</span></div><div class="content" id="content-${msg.id}">${escapeHtml(content)}</div><div class="actions"><a onclick="startEdit('${msg.id}')">✏️ 编辑</a><a onclick="deleteComment('${msg.id}')">🗑️ 删除</a></div></div>`;
+                    html += `
+                        <div class="comment-item">
+                            <div class="author">${escapeHtml(author)}<span class="time">${time}</span></div>
+                            <div class="content" id="content-${msg.id}">${escapeHtml(content)}</div>
+                            <div class="actions">
+                                <a onclick="startEdit('${msg.id}')">✏️ 编辑</a>
+                                <a onclick="deleteComment('${msg.id}')">🗑️ 删除</a>
+                            </div>
+                        </div>`;
                 });
                 commentListEl.innerHTML = html;
             } catch (err) {
                 commentListEl.innerHTML = '<p style="color:red;">加载留言失败</p>';
+                console.error(err);
             }
         }
 
@@ -818,15 +920,24 @@
             const author = document.getElementById('authorInput').value.trim() || '匿名';
             const content = document.getElementById('contentInput').value.trim();
             if (!content) { alert('请输入留言内容'); return; }
+
             try {
                 const raw = await kvGet('messages');
                 const messages = raw ? JSON.parse(raw) : [];
-                messages.push({ id: Date.now().toString(), author, content, time: new Date().toISOString() });
+                messages.push({
+                    id: Date.now().toString(),
+                    author,
+                    content,
+                    time: new Date().toISOString()
+                });
                 await kvSet('messages', messages);
                 document.getElementById('authorInput').value = '';
                 document.getElementById('contentInput').value = '';
                 loadComments();
-            } catch (err) { alert('留言失败'); }
+            } catch (err) {
+                alert('留言失败');
+                console.error(err);
+            }
         }
 
         async function deleteComment(id) {
@@ -837,13 +948,18 @@
                 messages = messages.filter(m => m.id !== id);
                 await kvSet('messages', messages);
                 loadComments();
-            } catch (err) { alert('删除失败'); }
+            } catch (err) {
+                alert('删除失败');
+                console.error(err);
+            }
         }
 
         function startEdit(id) {
             const el = document.getElementById('content-' + id);
             const text = el.innerText;
-            el.innerHTML = `<textarea class="editing-textarea" id="edit-${id}">${escapeHtml(text)}</textarea><button class="save-edit-btn" onclick="saveEdit('${id}')">💾 保存</button><button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
+            el.innerHTML = `<textarea class="editing-textarea" id="edit-${id}">${escapeHtml(text)}</textarea>
+                <button class="save-edit-btn" onclick="saveEdit('${id}')">💾 保存</button>
+                <button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
         }
 
         async function saveEdit(id) {
@@ -856,7 +972,10 @@
                 if (msg) msg.content = newContent;
                 await kvSet('messages', messages);
                 loadComments();
-            } catch (err) { alert('编辑失败'); }
+            } catch (err) {
+                alert('编辑失败');
+                console.error(err);
+            }
         }
 
         function escapeHtml(str) {
