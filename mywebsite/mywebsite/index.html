@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致最好的安欣</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: "Noto Serif SC", "STSong", "Songti SC", "Microsoft YaHei", serif;
+            color: #4a3728;
+            line-height: 2;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "🌸 🌺 🌷 💮 🌼 🌸 🌺 🌷 💮 🌼 🌸 🌺 🌷 💮 🌼";
+            position: fixed;
+            top: -50px;
+            left: 0;
+            width: 100%;
+            font-size: 24px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            animation: fall 20s linear infinite;
+            letter-spacing: 80px;
+            text-align: center;
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); }
+            100% { transform: translateY(100vh) rotate(360deg); }
+        }
+
+        .heart-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            animation: floatUp 1.5s ease-out forwards;
+            font-size: 24px;
+        }
+
+        @keyframes floatUp {
+            0% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+            100% { opacity: 0; transform: translateY(-120px) scale(0.3) rotate(45deg); }
+        }
+
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 40px 24px 60px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .header .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 8px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .header h1 {
+            font-size: 32px;
+            color: #c4734f;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .header .subtitle {
+            font-size: 14px;
+            color: #b8927c;
+            letter-spacing: 1px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 28px 24px;
+            margin-bottom: 28px;
+            box-shadow: 0 8px 32px rgba(180, 130, 100, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(180, 130, 100, 0.18);
+        }
+
+        .card p {
+            font-size: 16px;
+            text-align: center;
+            color: #6b4d3a;
+        }
+
+        .card .highlight {
+            display: inline-block;
+            background: linear-gradient(120deg, #ffe0cc 0%, #ffe0cc 100%);
+            background-repeat: no-repeat;
+            background-size: 100% 40%;
+            background-position: 0 90%;
+            padding: 0 4px;
+        }
+
+        .photo-section {
+            margin-bottom: 10px;
+        }
+
+        .photo-section .date-tag {
+            display: inline-block;
+            background: #f0d5c0;
+            color: #8b5e3c;
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .photo-section img {
+            width: 100%;
+            border-radius: 16px;
+            margin: 10px 0 6px;
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.15);
+            transition: transform 0.4s, box-shadow 0.4s;
+        }
+
+        .photo-section img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 36px rgba(160, 120, 80, 0.25);
+        }
+
+        .photo-section .caption {
+            color: #a08070;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        .video-section {
+            margin-bottom: 10px;
+        }
+
+        .video-section .date-tag {
+            display: inline-block;
+            background: #f0d5c0;
+            color: #8b5e3c;
+            font-size: 13px;
+            padding: 4px 14px;
+            border-radius: 20px;
+            margin-top: 24px;
+            margin-bottom: 8px;
+            letter-spacing: 1px;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            border-radius: 16px;
+            margin: 10px 0 6px;
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.15);
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            border: none;
+        }
+
+        .video-fallback {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            color: #8b5e3c;
+            font-size: 14px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .video-fallback button {
+            margin-top: 12px;
+            padding: 8px 20px;
+            background: #c4734f;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+        }
+
+        .video-section .caption {
+            color: #a08070;
+            font-size: 14px;
+            text-align: center;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+
+        /* 摘星星 */
+        .star-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .star-section h3 {
+            color: #c4734f;
+            font-size: 20px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .star-hint {
+            color: #b8927c;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .sky {
+            position: relative;
+            max-width: 420px;
+            height: 220px;
+            margin: 0 auto 10px;
+            background: linear-gradient(180deg, #1a1a3e 0%, #2d2d5e 40%, #4a3a6e 100%);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(30,20,60,0.2);
+        }
+        .sky .moon {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            font-size: 40px;
+            opacity: 0.8;
+            animation: moonGlow 4s ease-in-out infinite;
+        }
+        @keyframes moonGlow {
+            0%,100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        .star {
+            position: absolute;
+            font-size: 32px;
+            cursor: pointer;
+            transition: transform 0.3s, opacity 0.3s;
+            animation: twinkle 1.5s ease-in-out infinite;
+            user-select: none;
+        }
+        .star:hover {
+            transform: scale(1.4);
+        }
+        .star.collected {
+            animation: flyToJar 0.8s ease-in forwards;
+            pointer-events: none;
+        }
+        @keyframes twinkle {
+            0%,100% { opacity: 0.7; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.15); }
+        }
+        @keyframes flyToJar {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(0.5) translateY(-40px); }
+            100% { opacity: 0; transform: scale(0) translateY(-100px); }
+        }
+        .jar-area {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            color: #8b5e3c;
+        }
+        .jar {
+            font-size: 40px;
+            position: relative;
+        }
+        .jar-count {
+            font-weight: 700;
+            color: #c4734f;
+        }
+        .star-reward {
+            display: none;
+            text-align: center;
+            margin-top: 14px;
+            animation: fadeInUp 0.8s ease;
+        }
+        .star-reward .reward-text {
+            font-size: 18px;
+            color: #c4734f;
+            font-weight: 700;
+        }
+        .star-reward .reward-sub {
+            font-size: 14px;
+            color: #b8927c;
+            margin-top: 4px;
+        }
+              .star-reward img {
+            width: 100%;
+            max-width: 100%;
+            border-radius: 16px;
+            margin-top: 10px;
+            box-shadow: 0 6px 22px rgba(160,120,80,0.2);
+        }
+        .star-reset-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 6px 18px;
+            background: #e8d5c4;
+            color: #6b4d3a;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+        }
+        .star-reset-btn:hover {
+            background: #f0d5c0;
+        }
+
+        /* 翻牌消消乐 */
+        .game-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+        .game-section h3 {
+            color: #c4734f;
+            font-size: 20px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .game-hint {
+            color: #b8927c;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 380px;
+            margin: 0 auto 16px;
+        }
+        .card-tile {
+            aspect-ratio: 1;
+            perspective: 600px;
+            cursor: pointer;
+        }
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transition: transform 0.5s;
+            transform-style: preserve-3d;
+        }
+        .card-tile.flipped .card-inner,
+        .card-tile.matched .card-inner {
+            transform: rotateY(180deg);
+        }
+        .card-front,
+        .card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            box-shadow: 0 4px 14px rgba(160, 120, 80, 0.12);
+        }
+        .card-back {
+            background: linear-gradient(135deg, #d4956b, #c4734f);
+            color: #fff;
+        }
+        .card-front {
+            background: rgba(255, 255, 255, 0.9);
+            transform: rotateY(180deg);
+        }
+        .card-tile.matched .card-front {
+            background: #f0d5c0;
+            animation: matchPop 0.4s ease;
+        }
+        @keyframes matchPop {
+            0% { transform: rotateY(180deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.15); }
+            100% { transform: rotateY(180deg) scale(1); }
+        }
+        .game-reward {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 0.8s ease;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .game-reward img {
+            width: 100%;
+            max-width: 320px;
+            border-radius: 16px;
+            box-shadow: 0 8px 28px rgba(160, 120, 80, 0.2);
+            margin-top: 10px;
+        }
+        .game-reward .reward-caption {
+            color: #c4734f;
+            font-size: 16px;
+            font-weight: 700;
+            margin-top: 10px;
+        }
+        .game-reset-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 8px 22px;
+            background: #e8d5c4;
+            color: #6b4d3a;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            transition: background 0.2s;
+        }
+        .game-reset-btn:hover {
+            background: #f0d5c0;
+        }
+
+        .divider {
+            text-align: center;
+            margin: 36px 0 20px;
+            color: #d4b896;
+            font-size: 18px;
+            letter-spacing: 12px;
+        }
+
+        .board-section h2 {
+            text-align: center;
+            color: #c4734f;
+            font-size: 24px;
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .board-section .board-hint {
+            text-align: center;
+            color: #b8927c;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        .comment-form input,
+        .comment-form textarea {
+            padding: 14px 16px;
+            border: 1.5px solid #e8d5c4;
+            border-radius: 14px;
+            font-size: 15px;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(5px);
+            resize: vertical;
+            transition: border-color 0.3s, box-shadow 0.3s;
+            color: #4a3728;
+        }
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            border-color: #d4956b;
+            box-shadow: 0 0 0 3px rgba(212, 149, 107, 0.15);
+        }
+        .comment-form input::placeholder,
+        .comment-form textarea::placeholder {
+            color: #c4a88c;
+        }
+        .comment-form textarea {
+            min-height: 90px;
+        }
+        .comment-form button {
+            padding: 12px 28px;
+            background: linear-gradient(135deg, #d4956b 0%, #c4734f 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 15px;
+            font-family: inherit;
+            letter-spacing: 1px;
+            align-self: flex-end;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 16px rgba(196, 115, 79, 0.3);
+        }
+        .comment-form button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 22px rgba(196, 115, 79, 0.4);
+        }
+        .comment-form button:active {
+            transform: scale(0.97);
+        }
+        .comment-item {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            padding: 18px 20px;
+            border-radius: 16px;
+            margin-bottom: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 3px 16px rgba(160, 120, 80, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .comment-item:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 24px rgba(160, 120, 80, 0.14);
+        }
+        .comment-item .author {
+            font-weight: 700;
+            color: #c4734f;
+            font-size: 15px;
+            margin-bottom: 4px;
+        }
+        .comment-item .time {
+            font-size: 11px;
+            color: #bfa590;
+            margin-left: 10px;
+            font-weight: 400;
+        }
+        .comment-item .content {
+            color: #5c4033;
+            line-height: 1.7;
+            word-break: break-word;
+            font-size: 15px;
+        }
+        .comment-item .actions {
+            margin-top: 10px;
+            font-size: 13px;
+        }
+        .comment-item .actions a {
+            color: #d4956b;
+            cursor: pointer;
+            margin-right: 14px;
+            text-decoration: none;
+            transition: color 0.2s;
+            font-weight: 500;
+        }
+        .comment-item .actions a:hover {
+            color: #a0522d;
+        }
+        .editing-textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 12px;
+            border: 1.5px solid #e8d5c4;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 14px;
+            margin: 8px 0;
+            resize: vertical;
+            background: rgba(255, 255, 255, 0.8);
+            color: #4a3728;
+        }
+        .editing-textarea:focus {
+            outline: none;
+            border-color: #d4956b;
+        }
+        .save-edit-btn,
+        .cancel-edit-btn {
+            padding: 7px 18px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-family: inherit;
+            margin-right: 8px;
+            transition: transform 0.2s;
+        }
+        .save-edit-btn {
+            background: linear-gradient(135deg, #8fbc8f 0%, #6b9e6b 100%);
+            color: #fff;
+        }
+        .cancel-edit-btn {
+            background: #e8d5c4;
+            color: #6b4d3a;
+        }
+        .save-edit-btn:hover,
+        .cancel-edit-btn:hover {
+            transform: translateY(-1px);
+        }
+        .footer {
+            text-align: center;
+            color: #c4a88c;
+            font-size: 13px;
+            margin-top: 44px;
+            letter-spacing: 1px;
+        }
+        .footer span {
+            display: inline-block;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.2); }
+            50% { transform: scale(1); }
+        }
+        @media (max-width: 600px) {
+            .header h1 { font-size: 26px; }
+            .card p { font-size: 14px; }
+            .comment-form button { align-self: center; width: 100%; }
+            .game-board { max-width: 320px; gap: 6px; }
+            .card-front, .card-back { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="header">
+            <span class="icon">🌍</span>
+            <h1>海内存知己，天涯若比邻</h1>
+            <h1>千里云山遥相望，惟愿故人皆安康</h1>
+            <p class="subtitle">—— 给最好的朋友</p>
+        </div>
+
+        <div class="card">
+            <p><span class="highlight">Hi! 🌟🌟</span>！✨</p>
+            <p>欢迎来到这个独属于你一人的<span class="highlight">解忧杂货铺-网络世界</span>！✨</p>
+            <p>这个网站是专门为你而建，不管你是在地球哪一边，是在英国也好，在广丰也好，只要打开了这个网址，那么我希望你可以放松下来，因为这里是真正只属于你一个人的世界，无论是开心亦或者难过，都可以在最后面的留言板倾述你的心情</p>
+            <p>在留言板那里我给你说了一些我的心里话，当然你可以选择的看，如果你在否定自己的话不妨看一看</p>
+            <p>好啦，既然你打开了网站，我猜你应该是遇到了一些不开心或者不愉快的事情呢，我希望你每次打开的时候都能收获快乐（因为我会一直更新下去的哦）---当然如果你希望我去回复你的留言我就会打开这个网站和你谈谈心的哦，不过你如果不愿意别人打扰你这个小小世界话也完全ok（因为本来做这个网站的初衷就是希望哪怕你在差不多一万公里外的地方，偶尔有时候会觉得无所适从啊，不属于这个地方啊之类的，那么这个小小世界可以让你有自己的归属），那么在把那个锦囊给你之后我便不会再打开这个网站，当然愿意和我倾诉你的不快我肯定是非常非常开心的，我感觉别人愿意把心里话讲给我听我会感觉十分的荣幸和快乐，就像上次你拿最佳辩手那一次愿意讲给我听，额，不讲不讲，不愉快的事情我们不讲哈。</p>
+            <p>或许会有一个这样的疑问，网络世界和自己的朋友圈，备忘录有什么区别？制作网站的过程我会在留言板给出，你有兴趣再看，但是呢，一个网站你可以理解成高楼林立的城市中的一个小别墅，但是你手机上的app呢就像你是一个访问者，并不是拥有者，你做的一切在别的app上面其实都是公开的，但是呢，这个网站我已经在背后上了锁，是真正属于你一个人的，不被打扰完全私密的小小世界</p>
+             <p>后面是我精心挑选的照片和视频还有礼物和寄语，有很多小惊喜哦！🌟🌟</p>
+            <div class="divider">· · ✿ · ·</div>
+        </div>
+
+        <div class="photo-section">
+            <span class="date-tag">📷 白孔雀</span>
+            <img src="photo1.jpg" alt="照片1">
+            <p class="caption">听说遇到白孔雀开屏的人会心想事成哦，这是我在我们学校拍的哦，好看不，赶紧许愿让不开心走开。</p>
+
+            <span class="date-tag">分享一组好看的风景照，好风景带来好心情哦</span>
+            <img src="fengjing1.jpg" alt="best wish">
+            <p class="caption">看夕阳坠落的瞬间，所有烦恼都慢慢稀释</p>
+
+            <span class="date-tag">等一场橘色黄昏，把心事交给夕阳</span>
+            <img src="fengjing2.jpg" alt="best wish">
+
+            <span class="date-tag">夕阳会落在你身上，你也会快乐一场</span>
+            <img src="fengjing3.jpg" alt="best wish">
+
+            <span class="date-tag">把烦恼丢进山野，让风景治愈所有疲惫</span>
+            <img src="fengjing4.jpg" alt="best wish">
+
+            <span class="date-tag">青山不语，风月无边</span>
+            <img src="fengjing5.jpg" alt="best wish">
+
+            <span class="date-tag">要是不开心的话，小斗肖茂密来找你玩</span>
+            <img src="dog1.jpg" alt="best wish">
+
+            <span class="date-tag">再不开心，叫小斗拿鼻筒子戳你</span>
+            <img src="dog2.jpg" alt="best wish">
+
+            <span class="date-tag">也许和小咪一样睡一觉心情就好了呢</span>
+            <img src="dog4.jpg" alt="best wish">
+
+            <span class="date-tag">和你讲几个很有意思的小故事</span>
+            <img src="int1.jpg" alt="best wish">
+            <p class="caption">请你看庐山脚下的打铁花，记得那天朋友看到别人发朋友圈，兴致勃勃的说要去庐山玩，山脚下有什么超级大活动，结果过去发现就是巨普通的小吃街，当时温度就几度，于是我被他拖着在几度的冷风中看完了这个打铁花.........</p>
+
+            <span class="date-tag">store2</span>
+            <img src="int2.jpg" alt="best wish">
+            <p class="caption">那天考完试，兴冲冲的买了好多好吃的，然后也没看仔细，外卖写的是可乐，我如饕餮般狂喝了一大口，随之而来的是一股发臭的中药味，我chovy中国可乐......</p>
+
+            <span class="date-tag">做了老爹的专武，保你一路平平安安</span>
+            <img src="int3.jpg" alt="best wish">
+
+            <span class="date-tag">男神被绑在广丰了。。。</span>
+            <img src="int4.jpg" alt="best wish">
+            <p class="caption">快去救他>..<</p>
+        </div>
+  <div class="card">
+<div class="divider">· · ✿ · ·</div>
+            <p>视频似乎怎么改都有点卡，那就趁刷新的时间现在说说我心里面的zax，2017 年，我第一次看到你，在城南小学，当时我坐在教室第二大组的中间，你没有位置，是站在教室后面的，或者是命运的使然让我回头了，一眼就看到一堆人里面的你，你扎着双马尾，背着手，略显拘束。当时的我无论如何也想不到我们未来的样子与交集。</p>
+            <p>2018年，我被老师分到了你的左后方，那是我第一次离你那么近，此前只是坐在和你十万八千里的地方，只是从别人口中知道你是一个心地善良的好好同学，你还记得我搬过去我们讲的第一句话吗（你肯定记不得，谁会把一句话记个十年）----第一句话是那天 分的小组，你是组长来着，然后我们两个去扫包干区---走吧！。</p>
+            <p>同年，我们逐渐熟络了起来，我们经常一块去扫地。古灵精怪，心灵手巧，人美心善.....无数的形容词都无法描述你，回眸一笑百媚生，六宫粉黛无颜色,我仿佛能从回眸中看出你心底的善意</p>
+            <p>勤勉笃谨，或许你会觉得并不是，但我眼里你总是在努力的听课，总是在为了自己的目标在不懈努力中。我有时候会想你的英语怎么这么好，现在想想以前也不足为奇，你的听写总是全对，成绩也一直那么好，努力到现在，真的已经很厉害很厉害了，我的英语要有你一半那都是祖坟冒青烟了。或是无数个图书馆的日夜，或许每遇失意总能爬起的态度，才有此成就。落花飘于窗台前，流水流至月光下，倘今时有困顿烦忧，不妨回望来路，向来所为已是至佳，不必苛责自苦</p>
+            <p>人美心善，都说爱惜小猫小狗的人上辈子是天使来的，我猜你就是天使转世而来，对谁都保持那样的友善，你都忘记我是哪个人来着了，还说要和我一块玩游戏，不知道是不是客套话，你就不怕我是骗子吗.......。不能一块打游戏还拍我拍半天，推荐的视频列表一堆人也只有你会问我怎么了。感觉你不太会拒绝别人，有时候不得不爽约的时候又疯狂道歉，其实没什么的，你总是习惯于他人温柔，其实自己也值得被温柔接住。</p>
+            <p>三观端正，遇到不公敢起而抗之，有目标定能不懈追之，怀善心常以温善待之。但是你常常会因为一些事情使自己陷入内耗中，时常觉得自己还不够好，又会纠结自己有没有做错，虽然说看起来脾气很好，但是当你遇到触碰到你的三观，底线的时候你也会使自己冷静下来，不向不公妥协。</p>
+            <p>🌟🌟但是有一点也算是我的猜测，我的直觉。我总感觉你的内心存在着一个和你外在截然不同的样子，说不来具体的样子，我猜测内心的你或许向往自由，向往更广阔的天地，享受当下的平静的同时有着些许更伟大的抱负，有着很多天马行空的想法，甚至存在一些世俗不认可的想法。在夜深人静的时候会不会把另一个的你的想法书卷拿出来绘制呢？如果有机会的话我很愿意欣赏这幅佳作🌟🌟</p>
+            <p>我的朋友，你有个54927个优点--乐观，精准，仗义，细腻，灵动，正直，有同理心，乐于助人，诚实，温柔，大方，有责任心，果敢，豁达，豪爽，阳光，洒脱，有风度，共情能力强，有原则，有影响力，有魅力..........................等等等等，那不过是璀璨星空中不起眼的一颗颗而已，you are the best person i have ever met in my life，please be more confident。</p>
+<div class="divider">· · ✿ · ·</div>
+        </div>
+
+        <div class="video-section">
+            <span class="date-tag">🎬 珍贵影像</span>
+            <div class="video-wrapper" id="videoWrapper">
+                <iframe
+                    id="bilibiliVideo"
+                    src="//player.bilibili.com/player.html?bvid=BV1dCEt6HEqc&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    onerror="showVideoFallback()"
+                    onload="hideVideoFallback()">
+                </iframe>
+                <div class="video-fallback" id="videoFallback">
+<div class="video-wrapper">
+                <iframe
+                    src="//player.bilibili.com/player.html?bvid=BV1GWud6qEXX&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px; border: none;">
+                </iframe>
+            </div>
+ <div class="video-wrapper">
+                <iframe
+                    src="//player.bilibili.com/player.html?bvid=BV1Vpud6MEJ8&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px; border: none;">
+                </iframe>
+            </div>
+
+            <div class="video-wrapper">
+                <iframe
+                    src="//player.bilibili.com/player.html?bvid=BV134ud6vEvS&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px; border: none;">
+                </iframe>
+            </div>
+
+            <div class="video-wrapper">
+                <iframe
+                    src="//player.bilibili.com/player.html?bvid=BV1XWud6iEsB&high_quality=1&autoplay=0"
+                    allowfullscreen="true"
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px; border: none;">
+                </iframe>
+            </div>
+                    <p>😢 视频暂未加载</p>
+                    <p style="font-size:12px;color:#999;">可能是网络波动，刷新页面试试</p>
+                    <button onclick="location.reload()">🔄 刷新页面</button>
+                </div>
+            </div>
+            <p class="caption">找了一些有趣的视频希望能让你开心</p>
+        </div>
+
+        <!-- ========== 摘星星小游戏 ========== -->
+        <div class="star-section">
+            <h3>⭐ 摘星星</h3>
+            <p class="star-hint">把夜空里的星星都摘下来吧，点击星星就能摘到罐子里</p>
+            <div class="sky" id="sky">
+                <span class="moon">🌙</span>
+            </div>
+            <div class="jar-area">
+                <span class="jar">🏺</span>
+                <span>已摘：<span class="jar-count" id="jarCount">0</span> / <span id="totalStars">6</span> 颗</span>
+            </div>
+            <button class="star-reset-btn" onclick="resetStars()">🔄 重新挂上星星</button>
+            <div class="star-reward" id="starReward">
+                <p class="reward-text">✨ 所有的星星都摘给你</p>
+                <img src="photo4.jpg" alt="星星奖励">
+                <p class="reward-sub">愿你的每一天都闪闪发光，像这些星星一样 ✨</p>
+                 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 16px; margin: 16px auto 0; max-width: 100%; box-shadow: 0 6px 22px rgba(160,120,80,0.2);">
+                    <iframe
+                        src="//player.bilibili.com/player.html?bvid=BV1ifud6kEpm&high_quality=1&autoplay=0"
+                        scrolling="no"
+                        border="0"
+                        frameborder="no"
+                        framespacing="0"
+                        allowfullscreen="true"
+                        style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: 16px; border: none;">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== 翻牌消消乐 ========== -->
+        <div class="game-section">
+            <h3>🃏 翻牌消消乐</h3>
+            <p class="game-hint">翻开两张牌，配对成功就消除，全部消除有惊喜哦</p>
+            <div class="game-board" id="gameBoard"></div>
+            <button class="game-reset-btn" onclick="resetGame()">🔄 重新开始</button>
+            <div class="game-reward" id="gameReward">
+                <p class="reward-caption">🎉 全部消除！太棒啦！这张照片送给你，我猜你打开网站的时候应该差不多到圣诞节前后了，这是我自己用白板画的圣诞树，圣诞节快乐！，祝🌟🌟天天快乐</p>
+                <img src="photo5.jpg" alt="惊喜照片">
+                <p class="caption" style="margin-top:6px;">希望你喜欢这份小惊喜 🥰</p>
+            </div>
+        </div>
+
+        <div class="divider">· · ✿ · ·</div>
+
+        <div class="board-section">
+            <h2>📝 留言板</h2>
+            <p class="board-hint">想说点什么，就写在这里吧</p>
+            <div class="comment-form">
+                <input type="text" id="authorInput" placeholder="你的名字" maxlength="20" />
+                <textarea id="contentInput" placeholder="写一些想说的话..." maxlength="500"></textarea>
+                <button onclick="postComment()">💬 留言</button>
+            </div>
+            <div id="commentList">加载中...</div>
+        </div>
+
+        <div class="footer">
+            <p><span>🐱🐱</span> 搭建 · 跨越山海 · 永远在线</p>
+        </div>
+
+    </div>
+
+    <script>
+        // ========== 随机暖色背景 ==========
+        const gradients = [
+            'linear-gradient(180deg, #fef9f3 0%, #fdf0e6 30%, #fce8d5 60%, #fef9f3 100%)',
+            'linear-gradient(180deg, #fdf6f5 0%, #fce8e6 30%, #fadbd8 60%, #fdf6f5 100%)',
+            'linear-gradient(180deg, #fefcf5 0%, #fdf5e6 30%, #fae8c8 60%, #fefcf5 100%)',
+            'linear-gradient(180deg, #f5f7fe 0%, #e8edfc 30%, #d5dffa 60%, #f5f7fe 100%)',
+            'linear-gradient(180deg, #fdf8f5 0%, #fcefe4 30%, #f8d5c0 60%, #fdf8f5 100%)'
+        ];
+        document.body.style.background = gradients[Math.floor(Math.random() * gradients.length)];
+
+        // ========== 点击飘出小心心 ==========
+        document.addEventListener('click', function(e) {
+            const heart = document.createElement('span');
+            heart.className = 'heart-particle';
+            const emojis = ['❤️', '💛', '💚', '💙', '💜', '🌸', '✨', '🌟', '💫', '🎀'];
+            heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 1500);
+        });
+
+        // ========== 视频加载备用 ==========
+        function showVideoFallback() {
+            document.getElementById('videoFallback').style.display = 'flex';
+        }
+        function hideVideoFallback() {
+            document.getElementById('videoFallback').style.display = 'none';
+        }
+        setTimeout(() => {
+            const iframe = document.getElementById('bilibiliVideo');
+            try {
+                if (iframe.contentDocument === null || iframe.contentWindow === null) {}
+            } catch (e) {
+                showVideoFallback();
+            }
+        }, 5000);
+
+        // ========== 摘星星 ==========
+        (function() {
+            const TOTAL = 6;
+            const sky = document.getElementById('sky');
+            const jarCount = document.getElementById('jarCount');
+            const totalStars = document.getElementById('totalStars');
+            const reward = document.getElementById('starReward');
+            let collected = 0;
+            totalStars.textContent = TOTAL;
+
+            function randomPosition() {
+                const x = 20 + Math.random() * (sky.clientWidth - 70);
+                const y = 15 + Math.random() * (sky.clientHeight - 80);
+                return { x, y };
+            }
+
+            function createStars() {
+                sky.querySelectorAll('.star').forEach(s => s.remove());
+                reward.style.display = 'none';
+                collected = 0;
+                jarCount.textContent = '0';
+                const starEmojis = ['⭐', '🌟', '💫', '✨', '⭐', '🌟'];
+                for (let i = 0; i < TOTAL; i++) {
+                    const star = document.createElement('span');
+                    star.className = 'star';
+                    star.textContent = starEmojis[i];
+                    const pos = randomPosition();
+                    star.style.left = pos.x + 'px';
+                    star.style.top = pos.y + 'px';
+                    star.style.animationDelay = (Math.random() * 1.5) + 's';
+                    star.addEventListener('click', function() {
+                        if (star.classList.contains('collected')) return;
+                        star.classList.add('collected');
+                        collected++;
+                        jarCount.textContent = collected;
+                        setTimeout(() => star.remove(), 800);
+                        if (collected >= TOTAL) {
+                            setTimeout(() => {
+                                reward.style.display = 'block';
+                                reward.scrollIntoView({ behavior: 'smooth' });
+                            }, 600);
+                        }
+                    });
+                    sky.appendChild(star);
+                }
+            }
+            window.resetStars = createStars;
+            createStars();
+        })();
+
+        // ========== 翻牌消消乐 ==========
+        (function() {
+            const EMOJIS = ['🌸', '🌟', '💫', '🎀', '🍀', '💖', '🦋', '✨'];
+            const CARDS = [...EMOJIS, ...EMOJIS];
+            let firstCard = null, secondCard = null, lockBoard = false, matchedCount = 0;
+
+            function shuffle(arr) {
+                for (let i = arr.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [arr[i], arr[j]] = [arr[j], arr[i]];
+                }
+                return arr;
+            }
+
+            function createBoard() {
+                const board = document.getElementById('gameBoard');
+                const reward = document.getElementById('gameReward');
+                board.innerHTML = '';
+                reward.style.display = 'none';
+                firstCard = null; secondCard = null; lockBoard = false; matchedCount = 0;
+                const shuffled = shuffle([...CARDS]);
+                shuffled.forEach((emoji) => {
+                    const tile = document.createElement('div');
+                    tile.className = 'card-tile';
+                    tile.dataset.emoji = emoji;
+                    tile.innerHTML = `<div class="card-inner"><div class="card-back">❓</div><div class="card-front">${emoji}</div></div>`;
+                    tile.addEventListener('click', () => flipCard(tile));
+                    board.appendChild(tile);
+                });
+            }
+
+            function flipCard(tile) {
+                if (lockBoard) return;
+                if (tile.classList.contains('flipped') || tile.classList.contains('matched')) return;
+                if (tile === firstCard) return;
+                tile.classList.add('flipped');
+                if (!firstCard) { firstCard = tile; return; }
+                secondCard = tile; lockBoard = true; checkMatch();
+            }
+
+            function checkMatch() {
+                if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+                    firstCard.classList.add('matched');
+                    secondCard.classList.add('matched');
+                    matchedCount++;
+                    resetTurn();
+                    if (matchedCount === EMOJIS.length) {
+                        setTimeout(() => {
+                            document.getElementById('gameReward').style.display = 'block';
+                            document.getElementById('gameReward').scrollIntoView({ behavior: 'smooth' });
+                        }, 500);
+                    }
+                } else {
+                    setTimeout(() => {
+                        firstCard.classList.remove('flipped');
+                        secondCard.classList.remove('flipped');
+                        resetTurn();
+                    }, 600);
+                }
+            }
+
+            function resetTurn() { firstCard = null; secondCard = null; lockBoard = false; }
+            window.resetGame = createBoard;
+            createBoard();
+        })();
+
+        // ========== KV 配置 ==========
+        const KV_URL = 'https://absolute-doe-123636.upstash.io';
+        const KV_TOKEN = 'gQAAAAAAAeL0AAIgcDFkNjg3Nzc5ZWJiNDM0M2NlOWU4NjUxNjhmZjk3ODNjOQ';
+        const commentListEl = document.getElementById('commentList');
+
+        async function kvGet(key) {
+            const res = await fetch(`${KV_URL}/get/${key}`, {
+                headers: { 'Authorization': `Bearer ${KV_TOKEN}` }
+            });
+            const data = await res.json();
+            return data.result;
+        }
+
+        async function kvSet(key, value) {
+            await fetch(`${KV_URL}/set/${key}`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${KV_TOKEN}`, 'Content-Type': 'application/json' },
+                body: JSON.stringify(value)
+            });
+        }
+
+        async function loadComments() {
+            try {
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
+                if (messages.length === 0) {
+                    commentListEl.innerHTML = '<p style="text-align:center;color:#b8927c;font-size:14px;">还没有留言，来做第一个留言的人吧 🌸</p>';
+                    return;
+                }
+                let html = '';
+                messages.reverse().forEach(msg => {
+                    const author = msg.author || '匿名';
+                    const content = msg.content || '';
+                    const time = new Date(msg.time).toLocaleString('zh-CN');
+                    html += `<div class="comment-item"><div class="author">${escapeHtml(author)}<span class="time">${time}</span></div><div class="content" id="content-${msg.id}">${escapeHtml(content)}</div><div class="actions"><a onclick="startEdit('${msg.id}')">✏️ 编辑</a><a onclick="deleteComment('${msg.id}')">🗑️ 删除</a></div></div>`;
+                });
+                commentListEl.innerHTML = html;
+            } catch (err) {
+                commentListEl.innerHTML = '<p style="color:red;">加载留言失败</p>';
+            }
+        }
+
+        async function postComment() {
+            const author = document.getElementById('authorInput').value.trim() || '匿名';
+            const content = document.getElementById('contentInput').value.trim();
+            if (!content) { alert('请输入留言内容'); return; }
+            try {
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
+                messages.push({ id: Date.now().toString(), author, content, time: new Date().toISOString() });
+                await kvSet('messages', messages);
+                document.getElementById('authorInput').value = '';
+                document.getElementById('contentInput').value = '';
+                loadComments();
+            } catch (err) { alert('留言失败'); }
+        }
+
+        async function deleteComment(id) {
+            if (!confirm('确定删除这条留言吗？')) return;
+            try {
+                const raw = await kvGet('messages');
+                let messages = raw ? JSON.parse(raw) : [];
+                messages = messages.filter(m => m.id !== id);
+                await kvSet('messages', messages);
+                loadComments();
+            } catch (err) { alert('删除失败'); }
+        }
+
+        function startEdit(id) {
+            const el = document.getElementById('content-' + id);
+            const text = el.innerText;
+            el.innerHTML = `<textarea class="editing-textarea" id="edit-${id}">${escapeHtml(text)}</textarea><button class="save-edit-btn" onclick="saveEdit('${id}')">💾 保存</button><button class="cancel-edit-btn" onclick="loadComments()">取消</button>`;
+        }
+
+        async function saveEdit(id) {
+            const newContent = document.getElementById('edit-' + id).value.trim();
+            if (!newContent) { alert('内容不能为空'); return; }
+            try {
+                const raw = await kvGet('messages');
+                const messages = raw ? JSON.parse(raw) : [];
+                const msg = messages.find(m => m.id === id);
+                if (msg) msg.content = newContent;
+                await kvSet('messages', messages);
+                loadComments();
+            } catch (err) { alert('编辑失败'); }
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.innerText = str;
+            return div.innerHTML;
+        }
+
+        loadComments();
+    </script>
+
+</body>
+</html>
